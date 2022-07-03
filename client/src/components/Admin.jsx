@@ -358,10 +358,15 @@ function Admin() {
   }
 
   const handleRegisterCandidate = async (e) => {
-    e.preventDefault();
-    const voteUpdate = await contract.registerCandidate(candidateName); //the smartcontract function!
-    await voteUpdate.wait(); //wait until the transaction is complete
-    setCandidateName('');
+    try {
+      e.preventDefault();
+      const voteUpdate = await contract.registerCandidate(candidateName); //the smartcontract function!
+      await voteUpdate.wait(); //wait until the transaction is complete
+      setCandidateName('');
+    }
+    catch (e) {
+      alert(e.reason)
+    }
   }
 
   // Registering Voters Handler
@@ -370,18 +375,28 @@ function Admin() {
   }
 
   const handleGiveRightToVote = async (e) => {
-    e.preventDefault();
-    const voteUpdate = await contract.giveRightToVote(voterAddress); //the smartcontract function!
-    await voteUpdate.wait(); //wait until the transaction is complete
-    setVoterAddress('');
+    try {
+      e.preventDefault();
+      const voteUpdate = await contract.giveRightToVote(voterAddress); //the smartcontract function!
+      await voteUpdate.wait(); //wait until the transaction is complete
+      setVoterAddress('');
+    }
+    catch (e) {
+      alert(e.reason)
+    }
   }
 
   const handleTallyVotes = async (e) => {
-    e.preventDefault();
-    console.log("entro");
-    const tallyResult = await contract.tallyVotes() //the smartcontract function!
-    //await tallyResult.wait(); /don't wait, for now we treat it as a view
-    setWinnerName(tallyResult);
+    try {
+      e.preventDefault();
+      console.log("entro");
+      const tallyResult = await contract.tallyVotes() //the smartcontract function!
+      //await tallyResult.wait(); /don't wait, for now we treat it as a view
+      setWinnerName(tallyResult);
+    }
+    catch (e) {
+      alert(e.reason)
+    }
   }
 
   return (
